@@ -32,10 +32,12 @@ function showAllDatat()
 
 if (isset($_POST['delet'])) {
 
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
     $id = $_POST['id'];
 
-    $query = "DELETE FROM users WHERE id = $id";
-
+    $query = "DELETE FROM users WHERE username = '$username'";
     $result = mysqli_query($connection, $query);
 }
 
@@ -212,19 +214,19 @@ if (isset($_POST['delet'])) {
     <form action="delete.php" method="post">
         <h3>DELETE</h3>
 
-        <!-- <label for="username">Username</label>
+        <label for="username">Username</label>
         <input type="text" placeholder="Email or Phone" id="username" name="username">
 
-        <label for="password">Password</label>
+        <!-- <label for="password">Password</label>
         <input type="password" placeholder="Password" id="password" name="password"> -->
 
-        <select name="id" id="" class="select">
+        <!-- <select name="id" id="" class="select">
             <?php
 
-            showAllDatat();
+            //showAllDatat();
 
             ?>
-        </select>
+        </select> -->
 
         <button type="submit" name="delet">DELETE</button>
         <!-- <div class="social">
