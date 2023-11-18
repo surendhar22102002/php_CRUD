@@ -3,19 +3,43 @@
 $connection = mysqli_connect('mysql.selfmade.ninja:3306', 'surendhar2210', 'Suren143@thlet', 'surendhar2210_firstdb');
 
 
-if (!$connection) {
-    die("Not Connected");
-}
-
-$query = "SELECT * FROM users;";
-
-$result = mysqli_query($connection, $query);
-
-if (!$result) {
-    die('QUERY FAILED');
+if ($connection) {
+    echo 'Updated...!';
+} else {
+    echo 'Not Update...!';
 }
 
 
+function showAllDatat()
+{
+
+    global $connection;
+
+    $query = "SELECT * FROM users;";
+
+    $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+        die('QUERY FAILED');
+    }
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $id = $row['id'];
+
+        echo "<option value='$id'>$id</option>";
+    }
+}
+
+if (isset($_POST['update'])) {
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $id = $_POST['id'];
+
+    $query = "UPDATE users SET username = '$username', password = '$password' WHERE id = $id";
+
+    $result = mysqli_query($connection, $query);
+}
 
 ?>
 
@@ -145,6 +169,7 @@ if (!$result) {
 
         select {
             color: black;
+            margin-top: 20px;
         }
 
         option {
@@ -186,7 +211,7 @@ if (!$result) {
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form action="index.php" method="post">
+    <form action="update.php" method="post">
         <h3>UPDATE</h3>
 
         <label for="username">Username</label>
@@ -198,11 +223,7 @@ if (!$result) {
         <select name="id" id="" class="select">
             <?php
 
-            while ($row = mysqli_fetch_assoc($result)) {
-                $id = $row['id'];
-
-                echo "<option value='$id'>$id</option>";
-            }
+            showAllDatat();
 
             ?>
         </select>
